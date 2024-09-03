@@ -1,3 +1,5 @@
+import {getRandomArrayElement, getRandomValue } from './utils.js';
+
 const MAX_ADVERTISMENT_LENGTH = 10;
 const OFFER_TITLES = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis.',
@@ -46,17 +48,7 @@ const MAX_LAT = 35.7;
 const MIN_LON = 139.7;
 const MAX_LON = 139.8;
 
-const getRandomValue = (min, max) => {
-  const lower = Math.ceil(Math.min(min, max));
-  const upper = Math.floor(Math.max(min, max));
-  const result = Math.random() * (upper - lower + 1) + lower;
-
-  return Math.floor(result);
-};
-
 const getCoordinate = (min, max) =>  (Math.random() * (max - min) + min).toFixed(5);
-
-const getRandomArrayElement = (array) => array[getRandomValue(0, array.length - 1)];
 
 const getRandomLengthArray = (array) => {
   const feautures = new Set();
