@@ -1,6 +1,8 @@
 import {getRandomArrayElement,getRandomValue} from'./utils.js';
 import * as CONSTANTS from './data.js';
 
+const FLAG = 1;
+
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const mapCanvas = document.querySelector('.map__canvas');
 const popupPhoto = cardTemplate.querySelector('.popup__photo');
@@ -60,16 +62,6 @@ const createFeauture = (feauture) => {
 
 };
 
-const createFeatures = (feautures) => {
-  const fragment = document.createDocumentFragment();
-
-  feautures.forEach((feauture) => {
-    fragment.append(createFeauture(feauture));
-  });
-
-  return fragment;
-};
-
 const createPhoto = (photo) => {
   const popupPhotoClone = popupPhoto.cloneNode(true);
   popupPhotoClone.src = photo;
@@ -77,11 +69,19 @@ const createPhoto = (photo) => {
   return popupPhotoClone;
 };
 
-const createPhotos = (photos) => {
+const createElement = (data, flag = 0) => {
   const fragment = document.createDocumentFragment();
 
-  photos.forEach((photo) => {
-    fragment.append(createPhoto(photo));
+  if (flag) {
+    data.forEach((element) => {
+      fragment.append(createPhoto(element));
+    });
+
+    return fragment;
+  }
+
+  data.forEach((element) => {
+    fragment.append(createFeauture(element));
   });
 
   return fragment;
@@ -96,9 +96,9 @@ const renderCard = (element) => {
   patternClone.querySelector('.popup__type').textContent = CONSTANTS.DWELLING_TYPES[element.offer.type].translate;
   patternClone.querySelector('.popup__text--capacity').textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
   patternClone.querySelector('.popup__text--time').textContent = `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`;
-  patternClone.querySelector('.popup__features').replaceChildren(createFeatures(element.offer.feautures));
+  patternClone.querySelector('.popup__features').replaceChildren(createElement(element.offer.feautures));
   patternClone.querySelector('.popup__description').textContent = element.offer.description;
-  patternClone.querySelector('.popup__photos').replaceChildren(createPhotos(element.offer.photos));
+  patternClone.querySelector('.popup__photos').replaceChildren(createElement(element.offer.photos, FLAG));
   patternClone.querySelector('.popup__avatar ').src = element.author.avatar;
 
   return patternClone;

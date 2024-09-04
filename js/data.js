@@ -16,13 +16,6 @@ export const OFFER_TITLES = [
   'Vivamus dapibus pulvinar cursus. Donec fermentum placerat pulvinar. Mauris ac.',
   'Integer augue neque, tempor eget vehicula faucibus, viverra volutpat lorem.'
 ];
-// export const DWELLING_TYPES = {
-//   palace: 'Дворец',
-//   flat: 'Квартира',
-//   house: 'Дом',
-//   bungalow: 'Бунгало',
-//   hotel: 'Отель',
-// };
 export const DWELLING_TYPES = {
   palace: {
     type: 'palace',
