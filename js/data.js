@@ -16,13 +16,35 @@ export const OFFER_TITLES = [
   'Vivamus dapibus pulvinar cursus. Donec fermentum placerat pulvinar. Mauris ac.',
   'Integer augue neque, tempor eget vehicula faucibus, viverra volutpat lorem.'
 ];
-export const DWELLING_TYPES = [
-  'palace',
-  'flat',
-  'house',
-  'bungalow',
-  'hotel',
-];
+// export const DWELLING_TYPES = {
+//   palace: 'Дворец',
+//   flat: 'Квартира',
+//   house: 'Дом',
+//   bungalow: 'Бунгало',
+//   hotel: 'Отель',
+// };
+export const DWELLING_TYPES = {
+  palace: {
+    type: 'palace',
+    translate:'Дворец',
+  },
+  flat: {
+    type: 'flat',
+    translate:'Квартира',
+  },
+  house: {
+    type: 'house',
+    translate:'Дом',
+  },
+  bungalow: {
+    type:'bungalow',
+    translate:'Бунгало',
+  },
+  hotel: {
+    type: 'hotel',
+    translate:'Отель'
+  },
+};
 export const CHECKIN_TIMES = [
   '12:00',
   '13:00',

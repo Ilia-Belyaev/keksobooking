@@ -3,25 +3,28 @@ import * as CONSTANTS from './data.js';
 
 const cardTemplate = document.querySelector('#card').content.querySelector('.popup');
 const mapCanvas = document.querySelector('.map__canvas');
+const popupPhoto = cardTemplate.querySelector('.popup__photo');
+const feauturesTemplate = cardTemplate.querySelector('.popup__features');
+const popupFeautures = feauturesTemplate.querySelector('.popup__feature');
 
 const getCoordinate = (min, max) =>  (Math.random() * (max - min) + min).toFixed(5);
 
 const getRandomLengthArray = (array) => {
-  const feautures = new Set();
-  const arrayLength = getRandomValue(0, array.length);
+  const set = new Set();
+  const randArrayLength = getRandomValue(0, array.length);
 
-  while (feautures.size < arrayLength) {
-    feautures.add(getRandomArrayElement(CONSTANTS.FEAUTURES));
+  while (set.size < randArrayLength) {
+    set.add(getRandomArrayElement(array));
   }
 
-  return Array.from(feautures);
+  return Array.from(set);
 };
 
 const createOffer = () => ({
   title: getRandomArrayElement(CONSTANTS.OFFER_TITLES),
   address: `${getCoordinate(CONSTANTS.MIN_LAT, CONSTANTS.MAX_LAT)} - ${getCoordinate(CONSTANTS.MIN_LON, CONSTANTS.MAX_LON)}`,
   price: getRandomValue(0, CONSTANTS.MAX_ADVERTISMENT_LENGTH),
-  type: CONSTANTS.DWELLING_TYPES[getRandomValue(0, CONSTANTS.DWELLING_TYPES.length)],
+  type: CONSTANTS.DWELLING_TYPES[Object.keys(CONSTANTS.DWELLING_TYPES)[getRandomValue(0, Object.keys(CONSTANTS.DWELLING_TYPES).length - 1)]].type,
   rooms: getRandomValue(0, CONSTANTS.MAX_ADVERTISMENT_LENGTH),
   guests: getRandomValue(0, CONSTANTS.MAX_ADVERTISMENT_LENGTH),
   checkin: CONSTANTS.CHECKIN_TIMES[getRandomValue(0, CONSTANTS.CHECKIN_TIMES.length - 1)],
@@ -41,34 +44,73 @@ const createAdvertisement = (userId) => ({
   location: {
     lat: getCoordinate(CONSTANTS.MIN_LAT, CONSTANTS.MAX_LAT),
     lon: getCoordinate(CONSTANTS.MIN_LON, CONSTANTS.MAX_LON),
-  }
+  },
 });
 
 
-const createAdvertisements = (length) => Array.from({length}, (_, i) => createAdvertisement(i + 1));
+const advertisements = (length) => Array.from({length}, (_, i) => createAdvertisement(i + 1));
 
-const createCard = (element) => {
+const createFeauture = (feauture) => {
+  const popupFeauturesClone = popupFeautures.cloneNode(true);
+  popupFeauturesClone.className = feauture;
+  popupFeauturesClone.classList.add(`popup__feature--${feauture}`);
+  popupFeauturesClone.textContent = feauture;
+
+  return popupFeauturesClone;
+
+};
+
+const createFeatures = (feautures) => {
+  const fragment = document.createDocumentFragment();
+
+  feautures.forEach((feauture) => {
+    fragment.append(createFeauture(feauture));
+  });
+
+  return fragment;
+};
+
+const createPhoto = (photo) => {
+  const popupPhotoClone = popupPhoto.cloneNode(true);
+  popupPhotoClone.src = photo;
+
+  return popupPhotoClone;
+};
+
+const createPhotos = (photos) => {
+  const fragment = document.createDocumentFragment();
+
+  photos.forEach((photo) => {
+    fragment.append(createPhoto(photo));
+  });
+
+  return fragment;
+};
+
+const renderCard = (element) => {
   const patternClone = cardTemplate.cloneNode(true);
 
   patternClone.querySelector('.popup__title').textContent = element.offer.title;
   patternClone.querySelector('.popup__text--address').textContent = element.offer.address;
   patternClone.querySelector('.popup__text--price').textContent = `${element.offer.price} ₽/ночь`;
-  patternClone.querySelector('.popup__type').textContent = element.offer.type;//ПЕРЕДЕЛАТЬ
+  patternClone.querySelector('.popup__type').textContent = CONSTANTS.DWELLING_TYPES[element.offer.type].translate;
   patternClone.querySelector('.popup__text--capacity').textContent = `${element.offer.rooms} комнаты для ${element.offer.guests} гостей`;
   patternClone.querySelector('.popup__text--time').textContent = `Заезд после ${element.offer.checkin}, выезд до ${element.offer.checkout}`;
-  patternClone.querySelector('.popup__features').textContent = element.feautures;
+  patternClone.querySelector('.popup__features').replaceChildren(createFeatures(element.offer.feautures));
   patternClone.querySelector('.popup__description').textContent = element.offer.description;
+  patternClone.querySelector('.popup__photos').replaceChildren(createPhotos(element.offer.photos));
+  patternClone.querySelector('.popup__avatar ').src = element.author.avatar;
+
+  return patternClone;
 };
 
 const renderMap = (array) => {
   const fragment = document.createDocumentFragment();
 
-  // array.forEach((element) => {
-    fragment.append(createCard(array[4]));
-  // });
+  fragment.append(renderCard(getRandomArrayElement(array)));
 
   mapCanvas.append(fragment);
 };
 
-renderMap(createAdvertisements(CONSTANTS.MAX_ADVERTISMENT_LENGTH));
+renderMap(advertisements(CONSTANTS.MAX_ADVERTISMENT_LENGTH));
 
