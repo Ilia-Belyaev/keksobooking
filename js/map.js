@@ -9,7 +9,7 @@ const popupPhoto = cardTemplate.querySelector('.popup__photo');
 const feauturesTemplate = cardTemplate.querySelector('.popup__features');
 const popupFeautures = feauturesTemplate.querySelector('.popup__feature');
 
-const getCoordinate = (min, max) =>  (Math.random() * (max - min) + min).toFixed(5);
+const getCoordinate = (min, max) =>  (Math.random() * (max - min) + min).toFixed(CONSTANTS.FIX_NUMBER);
 
 const getRandomLengthArray = (array) => {
   const set = new Set();

@@ -1,4 +1,5 @@
 export const MAX_ADVERTISMENT_LENGTH = 10;
+export const FIX_NUMBER = 5;
 export const OFFER_TITLES = [
   'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi facilisis.',
   'Fusce congue lacinia ligula nec sagittis. Curabitur ante nibh, sagittis.',
