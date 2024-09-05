@@ -39,7 +39,7 @@ export const DWELLING_TYPES = {
     translate:'Отель'
   },
 };
-export const CHECKIN_TIMES = [
+export const TIMES = [
   '12:00',
   '13:00',
   '14:00',
@@ -57,7 +57,9 @@ export const PHOTOS = [
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/brandon-hoogenboom-SNxQGWxZQi0.jpg',
   'https://assets.htmlacademy.ru/content/intensive/javascript-1/keksobooking/claire-rendall-b6kAwr1i0Iw.jpg',
 ];
-export const MIN_LAT = 35.65;
-export const MAX_LAT = 35.7;
-export const MIN_LON = 139.7;
-export const MAX_LON = 139.8;
+export const LOCATION = {
+  MIN_LAT: 35.65,
+  MAX_LAT: 35.7,
+  MIN_LON: 139.7,
+  MAX_LON: 139.8,
+};
